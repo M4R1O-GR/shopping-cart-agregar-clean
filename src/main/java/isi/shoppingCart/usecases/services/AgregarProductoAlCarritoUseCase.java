@@ -22,13 +22,15 @@ public class AgregarProductoAlCarritoUseCase {
             return "Producto no encontrado.";
         }
 
-        if (!product.hasAvailableQuantity()) {
-            return "No hay cantidad disponible para agregar este producto.";
+        Cart cart = cartRepository.getCart();
+        int quantityInCart = cart.getQuantityOfProduct(productId);
+
+        if (quantityInCart >= product.getAvailableQuantity()) {
+            return "No se puede agregar más cantidad de este producto. "
+                    + "En el carrito solo se permite hasta la cantidad disponible.";
         }
 
-        Cart cart = cartRepository.getCart();
         cart.addProduct(product);
-        product.decreaseAvailableQuantity();
         cartRepository.save(cart);
 
         return "";

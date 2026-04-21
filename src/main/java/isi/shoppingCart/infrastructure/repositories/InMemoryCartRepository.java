@@ -22,9 +22,8 @@ public class InMemoryCartRepository implements CartRepository {
     }
 
     private void addInitialProduct(Product product) {
-        if (product != null && product.hasAvailableQuantity()) {
+        if (product != null) {
             cart.addProduct(product);
-            product.decreaseAvailableQuantity();
         }
     }
 
